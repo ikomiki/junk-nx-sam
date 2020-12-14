@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "projects": {
+    "junk-nx-sam": {
+      "projectType": "application",
+      "root": "apps/junk-nx-sam",
+      "sourceRoot": "apps/junk-nx-sam/src",
+      "prefix": "junk-nx-sam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/junk-nx-sam",
+            "index": "apps/junk-nx-sam/src/index.html",
+            "main": "apps/junk-nx-sam/src/main.ts",
+            "polyfills": "apps/junk-nx-sam/src/polyfills.ts",
+            "tsConfig": "apps/junk-nx-sam/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/junk-nx-sam/src/favicon.ico",
+              "apps/junk-nx-sam/src/assets"
+            ],
+            "styles": ["apps/junk-nx-sam/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/junk-nx-sam/src/environments/environment.ts",
+                  "with": "apps/junk-nx-sam/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "junk-nx-sam:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "junk-nx-sam:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "junk-nx-sam:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/junk-nx-sam/tsconfig.app.json",
+              "apps/junk-nx-sam/tsconfig.spec.json",
+              "apps/junk-nx-sam/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/junk-nx-sam/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/junk-nx-sam"],
+          "options": {
+            "jestConfig": "apps/junk-nx-sam/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "junk-nx-sam-e2e": {
+      "root": "apps/junk-nx-sam-e2e",
+      "sourceRoot": "apps/junk-nx-sam-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/junk-nx-sam-e2e/cypress.json",
+            "tsConfig": "apps/junk-nx-sam-e2e/tsconfig.e2e.json",
+            "devServerTarget": "junk-nx-sam:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "junk-nx-sam:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/junk-nx-sam-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/junk-nx-sam-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "packageManager": "pnpm"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "junk-nx-sam"
+}
