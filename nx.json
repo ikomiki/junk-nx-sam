@@ -29,6 +29,9 @@
     "junk-nx-sam-e2e": {
       "tags": [],
       "implicitDependencies": ["junk-nx-sam"]
+    },
+    "api": {
+      "tags": []
     }
   }
 }

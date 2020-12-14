@@ -117,6 +117,47 @@
           }
         }
       }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nx-aws/sam:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "template": "apps/api/template.yaml",
+            "tsConfig": "apps/api/tsconfig.app.json"
+          }
+        },
+        "package": {
+          "builder": "@nx-aws/sam:package",
+          "options": {
+            "templateFile": "apps/api/template.yaml",
+            "outputTemplateFile": "dist/apps/api/serverless-output.yaml",
+            "s3Prefix": "api",
+            "s3Bucket": "ikomiki-nx-sam"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "deploy": {
+          "builder": "@nx-aws/sam:deploy",
+          "options": {
+            "templateFile": "dist/apps/api/serverless-output.yaml",
+            "s3Prefix": "api",
+            "capabilities": ["CAPABILITY_IAM", "CAPABILITY_AUTO_EXPAND"],
+            "s3Bucket": "ikomiki-artifacts-bucket"
+          },
+          "configurations": {
+            "production": {}
+          }
+        }
+      }
     }
   },
   "cli": {
